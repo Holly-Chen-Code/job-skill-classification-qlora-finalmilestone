@@ -1,5 +1,6 @@
 # job-skill-classification-qlora-milestone-4
-<img width="485" height="612" alt="image" src="https://github.com/user-attachments/assets/f1669552-ca5b-4bdb-9abe-c7ce6ce3e953" />
+<img width="1021" height="1090" alt="image" src="https://github.com/user-attachments/assets/ca4919a1-a52f-4270-ae9f-b5e231364407" />
+
 
 
 
