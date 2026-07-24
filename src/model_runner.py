@@ -105,6 +105,7 @@ def load_model_and_tokenizer(base_model_id: str, adapter_path: Path):
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
     tokenizer.padding_side = "left"
+    tokenizer.truncation_side = "left"
 
     print("Loading Phi-3 base model...")
     base_model = AutoModelForCausalLM.from_pretrained(
