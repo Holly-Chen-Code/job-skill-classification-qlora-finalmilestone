@@ -20,7 +20,10 @@ Given a job title and description, the model predicts the corresponding **skill_
 1. Add the following Kaggle datasets as **Input**:
 
    - `test.xls`
+https://www.kaggle.com/datasets/hollychen12345/test-xls
+
    - `phi3_skill_lora_adapter`
+https://www.kaggle.com/datasets/hollychen12345/phi3-skill-lora-adapter
 
 2. Install dependencies:
 
