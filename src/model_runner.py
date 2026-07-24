@@ -99,7 +99,7 @@ def load_model_and_tokenizer(base_model_id: str, adapter_path: Path):
     print(f"GPU: {torch.cuda.get_device_name(0)}")
     print("Loading tokenizer...")
     tokenizer = AutoTokenizer.from_pretrained(
-        base_model_id,
+        str(adapter_path),
         trust_remote_code=False,
     )
     if tokenizer.pad_token is None:
