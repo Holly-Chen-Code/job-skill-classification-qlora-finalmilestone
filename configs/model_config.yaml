@@ -9,5 +9,5 @@ output_path: outputs/prediction_samples.csv
 sample_size: 10
 random_seed: 42
 max_input_length: 512
-max_new_tokens: 6
+max_new_tokens: 12
 batch_size: 2
