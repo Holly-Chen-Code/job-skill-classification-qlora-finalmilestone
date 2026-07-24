@@ -60,7 +60,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--adapter-path",
         default=None,
-        help="Optional adapter path overriding the YAML setting.",
+        help="Optional LoRA adapter path overriding the YAML setting.",
     )
 
     parser.add_argument(
@@ -130,11 +130,11 @@ def load_model_and_tokenizer(
     base_model_id: str,
     adapter_path: Path,
 ):
-    """Load the tokenizer, Phi-3 base model, and LoRA adapter."""
+    """Load the tokenizer, base model, and LoRA adapter."""
     if not torch.cuda.is_available():
         raise RuntimeError(
             "CUDA GPU was not detected. "
-            "Enable a GPU accelerator in Kaggle before running."
+            "Enable a GPU accelerator before running this script."
         )
 
     if not adapter_path.exists():
@@ -239,7 +239,6 @@ def predict_skills(
             )
 
         prompt_length = encoded["input_ids"].shape[1]
-
         generated_tokens = generated[:, prompt_length:]
 
         decoded_outputs = tokenizer.batch_decode(
@@ -247,12 +246,10 @@ def predict_skills(
             skip_special_tokens=True,
         )
 
-        batch_predictions = [
+        predictions.extend(
             clean_prediction(output)
             for output in decoded_outputs
-        ]
-
-        predictions.extend(batch_predictions)
+        )
 
     return predictions
 
@@ -270,7 +267,9 @@ def main() -> None:
         args.adapter_path or config["adapter_path"]
     )
 
-    output_path = resolve_path(config["output_path"])
+    output_path = resolve_path(
+        config["output_path"]
+    )
 
     sample_size = (
         args.sample_size
@@ -307,7 +306,9 @@ def main() -> None:
         model=model,
         tokenizer=tokenizer,
         instructions=sample_df["instruction"].tolist(),
-        batch_size=int(config.get("batch_size", 2)),
+        batch_size=int(
+            config.get("batch_size", 2)
+        ),
         max_input_length=int(
             config.get("max_input_length", 512)
         ),
@@ -341,15 +342,25 @@ def main() -> None:
         index=False,
     )
 
+    # Shorten long titles only for terminal display.
+    # The CSV file still contains the complete titles.
+    display_results = results.copy()
+
+    display_results["title"] = (
+        display_results["title"]
+        .astype(str)
+        .str.slice(0, 60)
+    )
+
     print(
         f"\nGenerated {len(results)} representative samples."
     )
 
     print("\nPrediction Results")
-    print("-" * 100)
+    print("-" * 110)
 
     print(
-        results[
+        display_results[
             [
                 "title",
                 "skill_name",
@@ -359,11 +370,10 @@ def main() -> None:
         ].to_string(index=False)
     )
 
-    print("-" * 100)
-    print(
-        f"\nSample Accuracy: {sample_accuracy:.2%}"
-    )
+    print("-" * 110)
+    print(f"Sample Accuracy: {sample_accuracy:.2%}")
     print(f"Predictions saved to: {output_path}")
+
 
 if __name__ == "__main__":
     try:
