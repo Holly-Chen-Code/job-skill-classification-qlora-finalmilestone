@@ -9,10 +9,9 @@ Given a job title and description, the model predicts the corresponding **skill_
 ---
 
 ## Repository Structure
+<img width="551" height="860" alt="image" src="https://github.com/user-attachments/assets/f0ef2fa0-56b5-4d48-a091-2b0efad30f60" />
 
-```
-<img width="1021" height="1090" alt="image" src="https://github.com/user-attachments/assets/ca4919a1-a52f-4270-ae9f-b5e231364407" />
-```
+
 
 ---
 
