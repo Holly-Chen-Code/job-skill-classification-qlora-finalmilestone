@@ -2,7 +2,7 @@ base_model_id: microsoft/Phi-3-mini-4k-instruct
 
 adapter_path: /kaggle/input/datasets/hollychen12345/phi3-skill-milestone4/phi3_skill_lora_adapter_v2
 
-test_data_path: /kaggle/input/datasets/hollychen12345/test-csv/test.zip
+test_data_path: /kaggle/input/datasets/hollychen12345/test-csv/test.xls
 
 output_path: outputs/prediction_samples.csv
 
