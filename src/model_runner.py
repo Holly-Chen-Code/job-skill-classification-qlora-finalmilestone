@@ -345,7 +345,8 @@ def main() -> None:
         f"\nGenerated {len(results)} representative samples."
     )
 
-    print(f"Predictions saved to: {output_path}")
+    print("\nPrediction Results")
+    print("-" * 100)
 
     print(
         results[
@@ -358,10 +359,11 @@ def main() -> None:
         ].to_string(index=False)
     )
 
+    print("-" * 100)
     print(
         f"\nSample Accuracy: {sample_accuracy:.2%}"
     )
-
+    print(f"Predictions saved to: {output_path}")
 
 if __name__ == "__main__":
     try:
