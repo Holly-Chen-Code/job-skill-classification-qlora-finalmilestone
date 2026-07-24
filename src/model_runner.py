@@ -215,6 +215,7 @@ def main() -> None:
         results["skill_name"].str.strip().str.lower()
         == results["prediction"].str.strip().str.lower()
     )
+    accuracy = results["correct"].mean()
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     results.to_csv(output_path, index=False)
@@ -222,6 +223,7 @@ def main() -> None:
     print(f"Generated {len(results)} representative samples.")
     print(f"Predictions saved to: {output_path}")
     print(results[["title", "skill_name", "prediction", "correct"]].to_string(index=False))
+    print(f"\nSample Accuracy: {accuracy:.2%}")
 
 
 if __name__ == "__main__":
