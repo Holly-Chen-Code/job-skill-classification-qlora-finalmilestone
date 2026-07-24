@@ -1,9 +1,0 @@
-torch
-transformers
-peft
-accelerate
-bitsandbytes>=0.46.1
-pandas
-PyYAML
-tqdm
-openpyxl

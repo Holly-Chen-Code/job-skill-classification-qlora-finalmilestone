@@ -1,9 +1,0 @@
-base_model_id: microsoft/Phi-3-mini-4k-instruct
-adapter_path: models/phi3_skill_lora_adapter_v2
-test_data_path: data/processed/test.csv
-output_path: outputs/prediction_samples.csv
-sample_size: 10
-random_seed: 42
-max_input_length: 512
-max_new_tokens: 6
-batch_size: 2
