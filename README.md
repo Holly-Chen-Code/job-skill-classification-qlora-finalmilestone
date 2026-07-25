@@ -32,3 +32,10 @@ The script generates 10 representative predictions and saves them to:
 ```
 outputs/prediction_samples.csv
 ```
+
+### 5. Miscellaneous
+```
+If you elect to setup a Kaggle notebook to take advantage of their GPU useage, please remember to set the GPU to "GPT T4 *2", this is the only compitable GPU in our experienment. The other GPU "GPU P1000" results in a hung-kernal and does not produce results.
+
+Another pointer is to recheck testing dataset direcotry in the model_runner; in some cases, virtual envieroment has a different path for the file.
+```
