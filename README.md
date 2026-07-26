@@ -1,5 +1,3 @@
-## Running the Inference Pipeline
-
 ## Project Overview
 
 This project fine-tunes Microsoft's Phi-3 Mini using QLoRA for job skill classification. Given a job title and job description, the model predicts the corresponding skill category.
@@ -19,7 +17,7 @@ output/prediction_samples.csv
 - Michael dong.mic@northeastern.edu
 
 ---
-
+## Running the Inference Pipeline
 ### 1. Clone the repository
 
 ```bash
