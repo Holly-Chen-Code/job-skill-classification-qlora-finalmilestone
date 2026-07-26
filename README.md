@@ -20,6 +20,8 @@ output/prediction_samples.csv
 - Holly Chen chen.holl@northeastern.edu
 - Michael dong.mic@northeastern.edu
 
+---
+
 
 ### 1. Clone the repository
 
