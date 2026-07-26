@@ -55,9 +55,3 @@ outputs/prediction_samples.csv
 If you elect to test-run this on Kaggle.com with their GPU usage, please remeber to set the GPU to "GPU T4 *2", in our testing, this is the only GPU compitable. The other GPU "GPU P1000" results in hung-kernal and does not produce resutls.
 
 Another poitners is to rember change the testing dataset file path, if you run into problem. Our hosted file is open to the public, however, in some enviroment, such as Kaggle's virtual one, it prevents you from loading. In that case, please download the dataset lcoally and intergret into the system, thank you.
-
----
-
-## Known Limitations
-
-This repository provides a reproducible inference pipeline. Full preprocessing, QLoRA fine-tuning, and evaluation are documented in the notebooks. Retraining is not included in the inference pipeline because QLoRA training requires substantial GPU resources.
