@@ -4,7 +4,6 @@
 
 This project fine-tunes Microsoft's Phi-3 Mini using QLoRA for job skill classification. Given a job title and job description, the model predicts the corresponding skill category.
 
----
 
 ## Preliminary Results
 
@@ -12,7 +11,6 @@ The fine-tuned model outperformed the baseline model. Representative predictions
 
 output/prediction_samples.csv
 
----
 
 ## Contributors
 
@@ -21,7 +19,6 @@ output/prediction_samples.csv
 - Michael dong.mic@northeastern.edu
 
 ---
-
 
 ### 1. Clone the repository
 
