@@ -7,7 +7,7 @@ This project fine-tunes Microsoft's Phi-3 Mini using QLoRA for job skill classif
 
 The fine-tuned model outperformed the baseline model. Representative predictions are saved in:
 
-output/prediction_samples.csv
+outputs/prediction_samples.csv
 
 
 ## Contributors
