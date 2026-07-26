@@ -60,4 +60,4 @@ Another poitners is to rember change the testing dataset file path, if you run i
 
 ## Known Limitations
 
-The repository provides a reproducible inference pipeline only. Full preprocessing, QLoRA fine-tuning, and evaluation are documented in the notebooks because model training requires substantial GPU resources.
+This repository provides a reproducible inference pipeline. Full preprocessing, QLoRA fine-tuning, and evaluation are documented in the notebooks. Retraining is not included in the inference pipeline because QLoRA training requires substantial GPU resources.
