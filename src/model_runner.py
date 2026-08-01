@@ -2,7 +2,7 @@
 
 Run from the project root:
 
-    python src/model_runner.py
+    python src/model_runner.py --config configs/model_config.yaml
 
 Paths and inference settings are stored in:
 
@@ -84,7 +84,7 @@ def resolve_path(path_value: str) -> Path:
 
 
 def load_config(config_path: str) -> dict[str, Any]:
-    """Load and validate the YAML configuration."""
+    """Load and validate the nested YAML configuration."""
     path = resolve_path(config_path)
 
     if not path.exists():
@@ -95,22 +95,41 @@ def load_config(config_path: str) -> dict[str, Any]:
     with path.open("r", encoding="utf-8") as file:
         config = yaml.safe_load(file) or {}
 
-    required_keys = [
-        "base_model_id",
-        "adapter_path",
-        "test_data_path",
-        "output_path",
+    required_sections = [
+        "model",
+        "data",
+        "generation",
+        "evaluation",
+        "output",
     ]
 
-    missing_keys = [
-        key
-        for key in required_keys
-        if not config.get(key)
+    missing_sections = [
+        section
+        for section in required_sections
+        if not isinstance(config.get(section), dict)
     ]
 
-    if missing_keys:
+    if missing_sections:
         raise ValueError(
-            f"Missing required configuration values: {missing_keys}"
+            f"Missing required configuration sections: {missing_sections}"
+        )
+
+    required_values = {
+        "model.base_model_id": config["model"].get("base_model_id"),
+        "model.adapter_path": config["model"].get("adapter_path"),
+        "data.test_path": config["data"].get("test_path"),
+        "output.directory": config["output"].get("directory"),
+    }
+
+    missing_values = [
+        key
+        for key, value in required_values.items()
+        if not value
+    ]
+
+    if missing_values:
+        raise ValueError(
+            f"Missing required configuration values: {missing_values}"
         )
 
     return config
@@ -259,26 +278,35 @@ def main() -> None:
     args = parse_args()
     config = load_config(args.config)
 
+    model_config = config["model"]
+    data_config = config["data"]
+    generation_config = config["generation"]
+    evaluation_config = config["evaluation"]
+    output_config = config["output"]
+
     test_data_path = resolve_path(
-        args.test_data or config["test_data_path"]
+        args.test_data or data_config["test_path"]
     )
 
     adapter_path = resolve_path(
-        args.adapter_path or config["adapter_path"]
+        args.adapter_path or model_config["adapter_path"]
     )
 
     output_path = resolve_path(
-        config["output_path"]
+        str(
+            Path(output_config["directory"])
+            / "prediction_samples.csv"
+        )
     )
 
     sample_size = (
         args.sample_size
         if args.sample_size is not None
-        else int(config.get("sample_size", 10))
+        else int(evaluation_config.get("sample_size", 10))
     )
 
     random_seed = int(
-        config.get("random_seed", 42)
+        evaluation_config.get("random_seed", 42)
     )
 
     print(f"Loading test data from: {test_data_path}")
@@ -298,7 +326,7 @@ def main() -> None:
     ).reset_index(drop=True)
 
     model, tokenizer = load_model_and_tokenizer(
-        base_model_id=config["base_model_id"],
+        base_model_id=model_config["base_model_id"],
         adapter_path=adapter_path,
     )
 
@@ -307,13 +335,13 @@ def main() -> None:
         tokenizer=tokenizer,
         instructions=sample_df["instruction"].tolist(),
         batch_size=int(
-            config.get("batch_size", 2)
+            generation_config.get("batch_size", 2)
         ),
         max_input_length=int(
-            config.get("max_input_length", 512)
+            generation_config.get("max_input_length", 512)
         ),
         max_new_tokens=int(
-            config.get("max_new_tokens", 12)
+            generation_config.get("max_new_tokens", 12)
         ),
     )
 
@@ -378,6 +406,7 @@ def main() -> None:
 if __name__ == "__main__":
     try:
         main()
+
     except Exception as error:
         print(
             f"ERROR: {error}",
