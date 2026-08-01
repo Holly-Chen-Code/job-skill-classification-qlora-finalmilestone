@@ -1,55 +1,259 @@
+# Phi-3 QLoRA Job Skill Classification
+
 ## Project Overview
 
-This project fine-tunes Microsoft's Phi-3 Mini using QLoRA for job skill classification. Given a job title and job description, the model predicts the corresponding skill category.
+This project develops a generative AI system that automatically classifies LinkedIn job postings into functional skill categories using Microsoft's **Phi-3 Mini 4K Instruct** model fine-tuned with **QLoRA (Quantized Low-Rank Adaptation)**.
 
-
-## Preliminary Results
-
-The fine-tuned model outperformed the baseline model. Representative predictions are saved in:
-
-outputs/prediction_samples.csv
-
-
-## Contributors
-
-- Group 20
-- Holly Chen chen.holl@northeastern.edu
-- Michael dong.mic@northeastern.edu
+The goal is to explore how parameter-efficient fine-tuning can improve instruction-following performance for job skill classification while requiring significantly fewer computational resources than full model fine-tuning.
 
 ---
-## Running the Inference Pipeline
-### 1. Clone the repository
 
-```bash
-git clone https://github.com/Holly-Chen-Code/job-skill-classification-qlora-milestone-4.git
-cd job-skill-classification-qlora-milestone-4
+## Project Objectives
+
+This project aims to:
+
+- Build an end-to-end generative AI pipeline for job skill classification.
+- Fine-tune Phi-3 Mini using QLoRA.
+- Compare the fine-tuned model against the original pretrained model.
+- Evaluate classification performance using standard metrics.
+- Provide a reproducible implementation for future research.
+
+---
+
+## Repository Structure
+
+```
+project-root/
+│
+├── configs/
+│   └── model_config.yaml
+│
+├── notebooks/
+│   ├── 01_data_preprocessing.ipynb
+│   ├── 02_build_training_dataset.ipynb
+│   ├── 03_phi3_qlora_training.ipynb
+│   └── 04_model_evaluation.ipynb
+│
+├── outputs/
+│   ├── prediction_samples.csv
+│   ├── evaluation_results.csv
+│   └── figures/
+│
+├── src/
+│   ├── preprocessing.py
+│   ├── training.py
+│   ├── data_loader.py
+│   ├── model_runner.py
+│   └── evaluation.py
+│
+├── utils/
+│   └── helpers.py
+│
+├── requirements.txt
+└── README.md
 ```
 
-### 2. Add the following public Kaggle datasets as Input
+---
 
-- **test.xls**
-  https://www.kaggle.com/datasets/hollychen12345/test-xls
+## Dataset
 
-- **phi3_skill_lora_adapter**
-  https://www.kaggle.com/datasets/hollychen12345/phi3-skill-lora-adapter
+The project uses the **LinkedIn Job Postings Dataset**, including:
 
-### 3. Install dependencies
+- postings.csv
+- job_skills.csv
+- skills.csv
+
+The preprocessing pipeline:
+
+- Removes missing records
+- Cleans HTML tags and special characters
+- Removes duplicate postings
+- Filters short job descriptions
+- Maps skill abbreviations to functional skill names
+- Splits the dataset into training, validation, and testing sets
+
+---
+
+## Methodology
+
+### Base Model
+
+- Microsoft Phi-3 Mini 4K Instruct
+
+### Fine-tuning Method
+
+- QLoRA
+- 4-bit NF4 Quantization
+- PEFT (Parameter Efficient Fine Tuning)
+
+### LoRA Configuration
+
+- Rank (r): 16
+- Alpha: 32
+- Dropout: 0.05
+
+Target modules:
+
+- qkv_proj
+- o_proj
+- gate_up_proj
+- down_proj
+
+---
+
+## Installation
 
 ```bash
+git clone <repository-url>
+
+cd project
+
 pip install -r requirements.txt
 ```
 
-### 4. Run inference
+---
+
+## Data Preprocessing
+
+Generate cleaned datasets:
 
 ```bash
-python src/model_runner.py
+python src/preprocessing.py
 ```
 
-The script generates 10 representative predictions and saves them to:
+Outputs:
+
+- cleaned_postings.csv
+- training_dataset.csv
+- train.csv
+- validation.csv
+- test.csv
+
+---
+
+## Model Training
+
+The complete QLoRA training workflow is implemented in
 
 ```
-outputs/prediction_samples.csv
+src/training.py
 ```
+
+Because QLoRA fine-tuning requires significant GPU resources, training is **not executed by default**.
+
+To validate the configuration:
+
+```bash
+python src/training.py \
+    --train-data train.csv \
+    --validation-data validation.csv
+```
+
+To reproduce the complete fine-tuning experiment on a CUDA-enabled GPU:
+
+```bash
+python src/training.py \
+    --train-data train.csv \
+    --validation-data validation.csv \
+    --train
+```
+
+---
+
+## Inference
+
+Run inference using the fine-tuned Phi-3 model:
+
+```bash
+python src/model_runner.py \
+    --config configs/model_config.yaml
+```
+
+The script automatically:
+
+- Loads the tokenizer
+- Loads the Phi-3 base model
+- Loads the trained LoRA adapter
+- Generates predictions
+- Saves prediction samples
+
+---
+
+## Evaluation
+
+Evaluate generated predictions:
+
+```bash
+python src/evaluation.py \
+    --predictions outputs/evaluation_results.csv
+```
+
+Metrics include:
+
+- Accuracy
+- Precision
+- Recall
+- F1 Score
+- Classification Report
+- Confusion Matrix
+
+---
+
+## Results
+
+The fine-tuned model demonstrates improved instruction-following capability compared with the original pretrained Phi-3 model.
+
+The repository includes:
+
+- prediction samples
+- evaluation reports
+- confusion matrices
+- comparison plots
+
+---
+
+## Example Output
+
+Example prediction:
+
+| Job Title | Ground Truth | Prediction |
+|-----------|--------------|------------|
+| Data Analyst | Data Analysis | Data Analysis |
+
+---
+
+## Reproducibility
+
+To reproduce this project:
+
+1. Run preprocessing
+2. Generate train/validation/test datasets
+3. Fine-tune Phi-3 with QLoRA (optional)
+4. Run inference
+5. Evaluate predictions
+
+The repository contains all scripts, configuration files, and sample outputs required to reproduce the workflow.
+
+---
+
+## Future Work
+
+Potential future improvements include:
+
+- Larger instruction datasets
+- Multi-label skill prediction
+- Better prompt engineering
+- Additional LLM backbone comparisons
+- Domain-specific instruction tuning
+
+---
+
+## Authors
+
+- Holly Chen
+- Team Members
+
+---
 
 ### 5. Miscellaneous
 If you elect to test-run this on Kaggle.com with their GPU usage, please remeber to set the GPU to "GPU T4 *2", in our testing, this is the only GPU compitable. The other GPU "GPU P1000" results in hung-kernal and does not produce resutls.
