@@ -352,7 +352,6 @@ During development and testing, the pipeline was successfully executed on a **Ka
 
 If GPU memory issues occur, we recommend using a **Tesla T4 (or equivalent/higher-memory GPU)**.
 
----
 
 ### Dataset Paths
 
@@ -362,7 +361,6 @@ If you download the datasets locally or use a different Kaggle environment, simp
 
 Another poitners is to rember change the testing dataset file path, if you run into problem. Our hosted file is open to the public, however, in some enviroment, such as Kaggle's virtual one, it prevents you from loading. In that case, please download the dataset lcoally and intergret into the system, thank you.
 
----
 
 ### Reproducibility
 
