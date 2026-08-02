@@ -342,7 +342,30 @@ These outputs summarize:
 
 ---
 
-### 5. Miscellaneous
-If you elect to test-run this on Kaggle.com with their GPU usage, please remeber to set the GPU to "GPU T4 *2", in our testing, this is the only GPU compitable. The other GPU "GPU P1000" results in hung-kernal and does not produce resutls.
+### Notes
+
+### GPU Requirements
+
+This project is designed to run on a CUDA-enabled GPU.
+
+During development and testing, the pipeline was successfully executed on a **Kaggle Tesla T4 GPU**. Training and inference on lower-memory GPUs (such as the Tesla P100 in our testing environment) may fail due to insufficient GPU memory.
+
+If GPU memory issues occur, we recommend using a **Tesla T4 (or equivalent/higher-memory GPU)**.
+
+---
+
+### Dataset Paths
+
+The default dataset paths in `configs/model_config.yaml` point to the public Kaggle datasets used during development.
+
+If you download the datasets locally or use a different Kaggle environment, simply update the dataset paths in `configs/model_config.yaml` before running the notebook.
 
 Another poitners is to rember change the testing dataset file path, if you run into problem. Our hosted file is open to the public, however, in some enviroment, such as Kaggle's virtual one, it prevents you from loading. In that case, please download the dataset lcoally and intergret into the system, thank you.
+
+---
+
+### Reproducibility
+
+The lightweight QLoRA training example included in this repository is intended to demonstrate the complete training pipeline within the computational limits of the course environment.
+
+The final inference and evaluation results are reproduced using the fully trained LoRA adapter developed during the original project.
