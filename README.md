@@ -59,20 +59,26 @@ The notebooks document the model development process completed throughout the co
 
 ## Dataset
 
-The project uses the **LinkedIn Job Postings Dataset**, including:
+This project uses two datasets at different stages of the workflow.
 
-- postings.csv
-- job_skills.csv
-- skills.csv
+### 1. Raw Dataset (Pipeline Demonstration)
 
-The preprocessing pipeline:
+The end-to-end preprocessing pipeline starts from the original **LinkedIn Job Postings Dataset**, which includes:
 
-- Removes missing records
-- Cleans HTML tags and special characters
-- Removes duplicate postings
-- Filters short job descriptions
-- Maps skill abbreviations to functional skill names
-- Splits the dataset into training, validation, and testing sets
+- `postings.csv` – Job posting information and descriptions
+- `job_skills.csv` – Relationships between job postings and required skills
+- `skills.csv` – Skill definitions and metadata
+
+The preprocessing pipeline cleans the raw data, maps skill labels, removes invalid records, and generates the processed training, validation, and test datasets.
+
+### 2. Final Evaluation Dataset
+
+For the final inference and evaluation, the repository uses:
+
+- A **fully trained Phi-3 QLoRA LoRA adapter**
+- The **held-out test dataset (`test.xls`)** specified in `configs/model_config.yaml`
+
+The lightweight training example included in this repository demonstrates the complete QLoRA training pipeline using a subset of the processed data. The final prediction examples and evaluation results are generated using the fully trained model and the complete held-out test dataset developed during the project.
 
 ---
 
