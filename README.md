@@ -65,9 +65,9 @@ This project uses two datasets at different stages of the workflow.
 
 The end-to-end preprocessing pipeline starts from the original **LinkedIn Job Postings Dataset**, which includes:
 
-- `postings.csv` – Job posting information and descriptions
-- `job_skills.csv` – Relationships between job postings and required skills
-- `skills.csv` – Skill definitions and metadata
+- `postings.csv` – Job posting information and descriptions https://www.kaggle.com/datasets/hollychen12345/postings-csv
+- `job_skills.csv` – Relationships between job postings and required skills https://www.kaggle.com/datasets/hollychen12345/job-skills-csv
+- `skills.csv` – Skill definitions and metadata https://www.kaggle.com/datasets/hollychen12345/skills-csv
 
 The preprocessing pipeline cleans the raw data, maps skill labels, removes invalid records, and generates the processed training, validation, and test datasets.
 
@@ -75,8 +75,8 @@ The preprocessing pipeline cleans the raw data, maps skill labels, removes inval
 
 For the final inference and evaluation, the repository uses:
 
-- A **fully trained Phi-3 QLoRA LoRA adapter**
-- The **held-out test dataset (`test.xls`)** specified in `configs/model_config.yaml`
+- A **fully trained Phi-3 QLoRA LoRA adapter** https://www.kaggle.com/datasets/hollychen12345/phi3-skill-lora-adapter
+- The **held-out test dataset (`test.xls`)** specified in `configs/model_config.yaml` https://www.kaggle.com/datasets/hollychen12345/test-xls
 
 The lightweight training example included in this repository uses a subset of the processed training data to demonstrate and verify the complete QLoRA training pipeline. This configuration allows the entire workflow to be reproduced efficiently within the computational constraints of the course environment.
 
