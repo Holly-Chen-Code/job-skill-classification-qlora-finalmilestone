@@ -53,6 +53,8 @@ This project aims to:
 └── requirements.txt
 ```
 
+The notebooks document the model development process completed throughout the course, while the modular implementation used for the final pipeline is located in the `src/` directory.
+
 ---
 
 ## Dataset
