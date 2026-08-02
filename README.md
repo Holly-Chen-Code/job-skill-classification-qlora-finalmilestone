@@ -165,7 +165,10 @@ The preprocessing pipeline:
 - Generates the processed training, validation, and test datasets
 
 ```python
-# Run the preprocessing notebook cell
+!python src/preprocessing.py \
+    --postings ".../postings.csv" \
+    --job-skills ".../job_skills.csv" \
+    --skills ".../skills.csv"
 ```
 
 ### Expected Output
@@ -204,7 +207,11 @@ The demonstration uses the **same preprocessing pipeline, model architecture, QL
 For the complete experiment, simply increase the sample sizes or train on the full processed dataset.
 
 ```python
-# Run the training notebook cell
+!python src/training.py \
+    --train-data "/kaggle/working/processed_data/train.csv" \
+    --validation-data "/kaggle/working/processed_data/validation.csv" \
+    --train-sample-size 50 \
+    --validation-sample-size 20
 ```
 
 ### Expected Output
@@ -238,7 +245,7 @@ The lightweight training demonstration in **Step 3** verifies that the complete 
 Training the final model on the complete processed training dataset requires substantially more GPU time and computational resources than the demonstration workflow. Therefore, the inference step loads the **fully trained LoRA adapter** together with the **held-out test dataset (`test.xls`)** generated during the original project, ensuring that the reported prediction examples and evaluation metrics are consistent with the final experimental results presented in the technical report and presentation.
 
 ```python
-# Run the inference notebook cell
+!python src/model_runner.py --config configs/model_config.yaml
 ```
 
 ### Expected Output
@@ -270,7 +277,12 @@ The evaluation reports:
 - F1-score
 
 ```python
-# Run the evaluation notebook cell
+!python src/evaluation.py \
+    --predictions outputs/prediction_samples.csv \
+    --ground-truth-column skill_name \
+    --finetuned-column prediction \
+    --baseline-column none \
+    --output-dir outputs/evaluation
 ```
 
 ### Expected Output
@@ -289,6 +301,17 @@ F1-score
 ## 6. Review Results
 
 Review the generated outputs.
+
+```python
+import pandas as pd
+from IPython.display import Image, display
+
+print("Prediction samples")
+display(pd.read_csv("outputs/prediction_samples.csv").head())
+
+print("Evaluation metrics")
+display(pd.read_csv(...))
+```
 
 The workflow automatically generates:
 
