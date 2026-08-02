@@ -84,31 +84,27 @@ The final project model was trained using the complete processed training datase
 
 ---
 
-## Methodology
+# Methodology
 
-### Base Model
+The project fine-tunes **Microsoft Phi-3 Mini 4K Instruct** for job skill classification using **QLoRA**, a parameter-efficient fine-tuning method that enables efficient training with limited GPU resources.
 
-- Microsoft Phi-3 Mini 4K Instruct
+### Model Configuration
 
-### Fine-tuning Method
+- **Base Model:** Microsoft Phi-3 Mini 4K Instruct
+- **Fine-tuning:** QLoRA (PEFT)
+- **Quantization:** 4-bit NF4
+- **LoRA Rank (r):** 16
+- **LoRA Alpha:** 32
+- **LoRA Dropout:** 0.05
 
-- QLoRA
-- 4-bit NF4 Quantization
-- PEFT (Parameter Efficient Fine Tuning)
+### Target Modules
 
-### LoRA Configuration
+- `qkv_proj`
+- `o_proj`
+- `gate_up_proj`
+- `down_proj`
 
-- Rank (r): 16
-- Alpha: 32
-- Dropout: 0.05
-
-Target modules:
-
-- qkv_proj
-- o_proj
-- gate_up_proj
-- down_proj
-
+The complete training configuration is provided in `configs/model_config.yaml`, and the implementation is available in `src/training.py`.
 ---
 
 # Running the Project
