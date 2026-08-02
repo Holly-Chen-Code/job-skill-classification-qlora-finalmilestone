@@ -111,124 +111,102 @@ Target modules:
 
 ---
 
-## Installation
+# Usage
+
+The repository demonstrates the complete workflow for building, evaluating, and reproducing the Phi-3 QLoRA job skill classification system.
+
+## 1. Setup
+
+Install the required dependencies and prepare the project environment.
 
 ```bash
-git clone <repository-url>
-
-cd project
-
 pip install -r requirements.txt
 ```
 
 ---
 
-## Data Preprocessing
+## 2. Preprocess the Raw Data
 
-Generate cleaned datasets:
+The preprocessing pipeline starts from the original **LinkedIn Job Postings Dataset**, including:
+
+- `postings.csv`
+- `job_skills.csv`
+- `skills.csv`
+
+This step:
+
+- Cleans and validates the raw data
+- Removes duplicate and invalid records
+- Cleans HTML tags and special characters
+- Maps skill labels to functional skill categories
+- Generates the processed training, validation, and test datasets
+
+Run:
 
 ```bash
 python src/preprocessing.py
 ```
 
-Outputs:
-
-- cleaned_postings.csv
-- training_dataset.csv
-- train.csv
-- validation.csv
-- test.csv
-
 ---
 
-## Model Training
+## 3. Test the Training Pipeline
 
-The complete QLoRA training workflow is implemented in
+This step demonstrates the complete **QLoRA training pipeline** using a small subset of the processed training data.
 
-```
-src/training.py
-```
+The demonstration uses the same preprocessing pipeline, model architecture, QLoRA configuration, and training procedure as the final project model. Only the dataset size is reduced so that the entire workflow can be reproduced efficiently within the computational limits of the course environment.
 
-Because QLoRA fine-tuning requires significant GPU resources, training is **not executed by default**.
+For the complete experiment, simply increase the sample sizes or train on the full processed dataset.
 
-To validate the configuration:
+Run:
 
 ```bash
-python src/training.py \
-    --train-data train.csv \
-    --validation-data validation.csv
-```
-
-To reproduce the complete fine-tuning experiment on a CUDA-enabled GPU:
-
-```bash
-python src/training.py \
-    --train-data train.csv \
-    --validation-data validation.csv \
-    --train
+python src/training.py
 ```
 
 ---
 
-## Inference
+## 4. Run Inference
 
-Run inference using the fine-tuned Phi-3 model:
+The inference pipeline loads the **fully trained Phi-3 QLoRA LoRA adapter** together with the held-out test dataset specified in `configs/model_config.yaml`.
+
+The demonstration training in **Step 3** is intended to verify that the complete QLoRA training workflow executes successfully. The final project model was trained using the complete processed training dataset, which requires substantially more GPU time and computational resources than the demonstration workflow.
+
+Therefore, the inference step uses the fully trained LoRA adapter and the complete held-out test dataset developed during the original project, ensuring that the reported prediction examples and evaluation metrics are consistent with the final experimental results.
+
+Run:
 
 ```bash
-python src/model_runner.py \
-    --config configs/model_config.yaml
+python src/model_runner.py
 ```
-
-The script automatically:
-
-- Loads the tokenizer
-- Loads the Phi-3 base model
-- Loads the trained LoRA adapter
-- Generates predictions
-- Saves prediction samples
 
 ---
 
-## Evaluation
+## 5. Evaluate Predictions
 
-Evaluate generated predictions:
-
-```bash
-python src/evaluation.py \
-    --predictions outputs/evaluation_results.csv
-```
-
-Metrics include:
+Evaluate the prediction results using standard classification metrics, including:
 
 - Accuracy
 - Precision
 - Recall
-- F1 Score
-- Classification Report
-- Confusion Matrix
+- F1-score
+
+Run:
+
+```bash
+python src/evaluation.py
+```
 
 ---
 
-## Results
+## 6. Review Results
 
-The fine-tuned model demonstrates improved instruction-following capability compared with the original pretrained Phi-3 model.
+The generated outputs are saved in the `outputs/` directory, including:
 
-The repository includes:
+- `preprocessing_summary.png`
+- `prediction_samples.csv`
+- `evaluation_results.png`
 
-- prediction samples
-- evaluation reports
-- confusion matrices
-- comparison plots
-
----
-
-## Example Output
-
-Example prediction:
-
-| Job Title | Ground Truth | Prediction |
-|-----------|--------------|------------|
-| Data Analyst | Data Analysis | Data Analysis |
+These outputs summarize the preprocessing statistics, representative prediction examples, and the final evaluation metrics of the model.
 
 ---
 
