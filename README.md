@@ -105,6 +105,7 @@ The project fine-tunes **Microsoft Phi-3 Mini 4K Instruct** for job skill classi
 - `down_proj`
 
 The complete training configuration is provided in `configs/model_config.yaml`, and the implementation is available in `src/training.py`.
+
 ---
 
 # Running the Project
