@@ -12,16 +12,11 @@ The model predicts functional skill categories from LinkedIn job postings. The r
 
 This project aims to:
 
-Build a reproducible inference pipeline for job skill classification.
-
-Load a fine-tuned Phi-3 Mini QLoRA model.
-
-Generate skill predictions from unseen job postings.
-
-Evaluate prediction performance using standard classification metrics.
-
-Save representative outputs for reproducibility.
-
+- Build a reproducible inference pipeline for job skill classification.
+- Load a fine-tuned Phi-3 Mini QLoRA model.
+- Generate skill predictions from unseen job postings.
+- Evaluate prediction performance using standard classification metrics.
+- Save representative outputs for reproducibility.
 ---
 
 ## Repository Structure
