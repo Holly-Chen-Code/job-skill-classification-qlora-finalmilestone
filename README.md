@@ -2,9 +2,11 @@
 
 ## Project Overview
 
-This project presents a reproducible inference pipeline for job skill classification using Microsoft's Phi-3 Mini 4K Instruct model fine-tuned with QLoRA (Quantized Low-Rank Adaptation).
+This project presents an end-to-end generative AI pipeline for job skill classification using Microsoft's Phi-3 Mini 4K Instruct model fine-tuned with QLoRA (Quantized Low-Rank Adaptation).
 
-The model predicts functional skill categories from LinkedIn job postings. The repository provides an end-to-end workflow for loading the fine-tuned model, running inference, generating predictions, and evaluating classification performance.
+The repository includes the complete workflow for data preprocessing, dataset construction, QLoRA fine-tuning, inference, and evaluation. To support reproducibility, a lightweight training configuration is provided to demonstrate the complete pipeline, while the final prediction examples and evaluation results are generated using the fully trained model developed during the project.
+
+The model predicts functional skill categories from LinkedIn job postings and demonstrates how parameter-efficient fine-tuning can be applied to a real-world job classification task.
 
 ---
 
