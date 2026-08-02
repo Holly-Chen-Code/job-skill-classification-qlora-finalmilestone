@@ -242,7 +242,7 @@ Run inference using the configuration defined in `configs/model_config.yaml`.
 
 The lightweight training demonstration in **Step 3** verifies that the complete QLoRA training pipeline executes successfully.
 
-Training the final model on the complete processed training dataset requires substantially more GPU time and computational resources than the demonstration workflow. Therefore, the inference step loads the **fully trained LoRA adapter** together with the **held-out test dataset (`test.xls`)** generated during the original project, ensuring that the reported prediction examples and evaluation metrics are consistent with the final experimental results presented in the technical report and presentation.
+Training the final model on the complete processed training dataset requires substantially more GPU time and computational resources than the demonstration workflow. Therefore, the inference step loads the **fully trained LoRA adapter（Phi-3 QLoRA LoRA adapter）** together with the **held-out test dataset (`test.xls`)** generated during the original project, ensuring that the reported prediction examples and evaluation metrics are consistent with the final experimental results presented in the technical report and presentation.
 
 ```python
 !python src/model_runner.py --config configs/model_config.yaml
