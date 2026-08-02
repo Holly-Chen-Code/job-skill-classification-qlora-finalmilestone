@@ -71,16 +71,16 @@ The end-to-end preprocessing pipeline starts from the original **LinkedIn Job Po
 
 The preprocessing pipeline cleans the raw data, maps skill labels, removes invalid records, and generates the processed training, validation, and test datasets.
 
-### 2. Final Evaluation Dataset
+### 2. Final Inference Resources
 
 For the final inference and evaluation, the repository uses:
 
 - A **fully trained Phi-3 QLoRA LoRA adapter**
 - The **held-out test dataset (`test.xls`)** specified in `configs/model_config.yaml`
 
-The lightweight training example included in this repository uses a subset of the processed training data to demonstrate and verify the complete QLoRA training pipeline. This configuration enables the end-to-end workflow to be reproduced within the computational limits of the course environment.
+The lightweight training example included in this repository uses a subset of the processed training data to demonstrate and verify the complete QLoRA training pipeline. This configuration allows the entire workflow to be reproduced efficiently within the computational constraints of the course environment.
 
-The final project model was trained on the complete processed training dataset, which requires significantly more computational resources and training time. Therefore, the inference step loads the fully trained LoRA adapter and the held-out test dataset generated during the original project, ensuring that the reported prediction examples and evaluation metrics are consistent with the final experimental results.
+The final project model was trained using the complete processed training dataset, which requires substantially more GPU time and computational resources than the demonstration workflow. Therefore, the inference step loads the fully trained LoRA adapter together with the held-out test dataset (`test.xls`) generated during the original project. This configuration reproduces the final experimental results reported in the technical report and presentation while preserving a practical, reproducible end-to-end pipeline.
 
 ---
 
