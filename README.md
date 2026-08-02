@@ -169,6 +169,7 @@ The preprocessing pipeline:
     --postings ".../postings.csv" \
     --job-skills ".../job_skills.csv" \
     --skills ".../skills.csv"
+    --output-dir "/kaggle/working/processed_data"
 ```
 
 ### Expected Output
@@ -211,7 +212,10 @@ For the complete experiment, simply increase the sample sizes or train on the fu
     --train-data "/kaggle/working/processed_data/train.csv" \
     --validation-data "/kaggle/working/processed_data/validation.csv" \
     --train-sample-size 50 \
-    --validation-sample-size 20
+    --validation-sample-size 20 \
+    --epochs 1 \
+    --output-dir "/kaggle/working/phi3_skill_lora_test" \
+    --train
 ```
 
 ### Expected Output
@@ -310,7 +314,9 @@ print("Prediction samples")
 display(pd.read_csv("outputs/prediction_samples.csv").head())
 
 print("Evaluation metrics")
-display(pd.read_csv(...))
+display(pd.read_csv("outputs/evaluation/metrics.csv"))
+
+display(Image(filename="outputs/evaluation/finetuned_confusion_matrix.png"))
 ```
 
 The workflow automatically generates:
