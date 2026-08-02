@@ -111,130 +111,199 @@ Target modules:
 
 ---
 
-# Usage
+# Running the Project
 
-The repository demonstrates the complete workflow for building, evaluating, and reproducing the Phi-3 QLoRA job skill classification system.
+The recommended way to reproduce this project is to execute the provided Kaggle notebook sequentially. Each stage calls the reusable modules implemented in the `src/` directory.
+
+---
 
 ## 1. Setup
 
-Install the required dependencies and prepare the project environment.
+Clone the repository, install the required dependencies, and verify that a CUDA-enabled GPU is available.
 
-```bash
-pip install -r requirements.txt
+```python
+%cd /kaggle/working
+
+# Clone once; pull updates when the repository already exists.
+!if [ -d "job-skill-classification-qlora-finalmilestone/.git" ]; then \
+    git -C job-skill-classification-qlora-finalmilestone pull; \
+else \
+    git clone https://github.com/Holly-Chen-Code/job-skill-classification-qlora-finalmilestone.git; \
+fi
+
+%cd /kaggle/working/job-skill-classification-qlora-finalmilestone
+
+!pip install -q -r requirements.txt
+
+import torch
+
+print("CUDA available:", torch.cuda.is_available())
+
+if torch.cuda.is_available():
+    print("GPU:", torch.cuda.get_device_name(0))
+```
+
+### Expected Output
+
+```
+CUDA available: True
+GPU: Tesla T4
 ```
 
 ---
 
 ## 2. Preprocess the Raw Data
 
-The preprocessing pipeline starts from the original **LinkedIn Job Postings Dataset**, including:
+Run the preprocessing pipeline using the original **LinkedIn Job Postings Dataset**.
 
-- `postings.csv`
-- `job_skills.csv`
-- `skills.csv`
+The preprocessing pipeline:
 
-This step:
-
-- Cleans and validates the raw data
-- Removes duplicate and invalid records
+- Loads `postings.csv`, `job_skills.csv`, and `skills.csv`
 - Cleans HTML tags and special characters
-- Maps skill labels to functional skill categories
+- Removes duplicate and invalid records
+- Maps skill labels to standardized functional skill categories
 - Generates the processed training, validation, and test datasets
 
-Run:
+```python
+# Run the preprocessing notebook cell
+```
 
-```bash
-python src/preprocessing.py
+### Expected Output
+
+```
+PREPROCESSING PIPELINE COMPLETE
+
+Original postings: ...
+Cleaned postings: ...
+Training dataset rows: ...
+Train rows: ...
+Validation rows: ...
+Test rows: ...
+```
+
+Generated files:
+
+```
+processed_data/
+├── IE7374_clean_postings.csv
+├── IE7374_cleaning_report.csv
+├── training_dataset.csv
+├── train.csv
+├── validation.csv
+└── test.csv
 ```
 
 ---
 
 ## 3. Test the Training Pipeline
 
-This step demonstrates the complete **QLoRA training pipeline** using a small subset of the processed training data.
+Run a lightweight QLoRA training example using a subset of the processed training data.
 
-The demonstration uses the same preprocessing pipeline, model architecture, QLoRA configuration, and training procedure as the final project model. Only the dataset size is reduced so that the entire workflow can be reproduced efficiently within the computational limits of the course environment.
+The demonstration uses the **same preprocessing pipeline, model architecture, QLoRA configuration, and training procedure** as the final project model. Only the training dataset size is reduced so that the complete workflow can be reproduced efficiently within the computational limits of the course environment.
 
 For the complete experiment, simply increase the sample sizes or train on the full processed dataset.
 
-Run:
+```python
+# Run the training notebook cell
+```
 
-```bash
-python src/training.py
+### Expected Output
+
+```
+PHI-3 QLORA TRAINING CONFIGURATION
+
+Base model:
+microsoft/Phi-3-mini-4k-instruct
+
+Training completed.
+
+Adapter saved to:
+phi3_skill_lora_test/
+
+Training metrics:
+...
+
+Evaluation metrics:
+...
 ```
 
 ---
 
 ## 4. Run Inference
 
-The inference pipeline loads the **fully trained Phi-3 QLoRA LoRA adapter** together with the held-out test dataset specified in `configs/model_config.yaml`.
+Run inference using the configuration defined in `configs/model_config.yaml`.
 
-The demonstration training in **Step 3** is intended to verify that the complete QLoRA training workflow executes successfully. The final project model was trained using the complete processed training dataset, which requires substantially more GPU time and computational resources than the demonstration workflow.
+The lightweight training demonstration in **Step 3** verifies that the complete QLoRA training pipeline executes successfully.
 
-Therefore, the inference step uses the fully trained LoRA adapter and the complete held-out test dataset developed during the original project, ensuring that the reported prediction examples and evaluation metrics are consistent with the final experimental results.
+Training the final model on the complete processed training dataset requires substantially more GPU time and computational resources than the demonstration workflow. Therefore, the inference step loads the **fully trained LoRA adapter** together with the **held-out test dataset (`test.xls`)** generated during the original project, ensuring that the reported prediction examples and evaluation metrics are consistent with the final experimental results presented in the technical report and presentation.
 
-Run:
+```python
+# Run the inference notebook cell
+```
 
-```bash
-python src/model_runner.py
+### Expected Output
+
+```
+Generating predictions...
+
+Generated 20 representative samples.
+
+Prediction Results
+...
+
+Prediction samples saved to:
+
+outputs/prediction_samples.csv
 ```
 
 ---
 
 ## 5. Evaluate Predictions
 
-Evaluate the prediction results using standard classification metrics, including:
+Evaluate the generated predictions using standard classification metrics.
+
+The evaluation reports:
 
 - Accuracy
 - Precision
 - Recall
 - F1-score
 
-Run:
+```python
+# Run the evaluation notebook cell
+```
 
-```bash
-python src/evaluation.py
+### Expected Output
+
+```
+MODEL EVALUATION COMPLETE
+
+Accuracy
+Precision
+Recall
+F1-score
 ```
 
 ---
 
 ## 6. Review Results
 
-The generated outputs are saved in the `outputs/` directory, including:
+Review the generated outputs.
 
-- `preprocessing_summary.png`
-- `prediction_samples.csv`
-- `evaluation_results.png`
+The workflow automatically generates:
 
-These outputs summarize the preprocessing statistics, representative prediction examples, and the final evaluation metrics of the model.
+```
+outputs/
+├── preprocessing_summary.png
+├── prediction_samples.csv
+└── evaluation_results.png
+```
 
----
+These outputs summarize:
 
-## Reproducibility
-
-To reproduce this project:
-
-1. Run preprocessing
-2. Generate train/validation/test datasets
-3. Fine-tune Phi-3 with QLoRA (optional)
-4. Run inference
-5. Evaluate predictions
-
-The repository contains all scripts, configuration files, and sample outputs required to reproduce the workflow.
-
----
-
-## Future Work
-
-Potential future improvements include:
-
-- Larger instruction datasets
-- Multi-label skill prediction
-- Better prompt engineering
-- Additional LLM backbone comparisons
-- Domain-specific instruction tuning
-
----
+- Data preprocessing statistics
+- Representative prediction examples
+- Final evaluation metrics
 
 ## Authors
 
