@@ -78,7 +78,9 @@ For the final inference and evaluation, the repository uses:
 - A **fully trained Phi-3 QLoRA LoRA adapter**
 - The **held-out test dataset (`test.xls`)** specified in `configs/model_config.yaml`
 
-The lightweight training example included in this repository demonstrates the complete QLoRA training pipeline using a subset of the processed data. The final prediction examples and evaluation results are generated using the fully trained model and the complete held-out test dataset developed during the project.
+The lightweight training example included in this repository uses a subset of the processed training data to demonstrate and verify the complete QLoRA training pipeline. This configuration enables the end-to-end workflow to be reproduced within the computational limits of the course environment.
+
+The final project model was trained on the complete processed training dataset, which requires significantly more computational resources and training time. Therefore, the inference step loads the fully trained LoRA adapter and the held-out test dataset generated during the original project, ensuring that the reported prediction examples and evaluation metrics are consistent with the final experimental results.
 
 ---
 
