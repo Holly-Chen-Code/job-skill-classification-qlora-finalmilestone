@@ -21,6 +21,14 @@ This project aims to:
 - Save representative outputs for reproducibility.
 ---
 
+## Authors
+
+Group 20
+- Holly Chen
+- Michael Dong
+
+---
+
 ## Repository Structure
 
 ```
@@ -331,10 +339,6 @@ These outputs summarize:
 - Representative prediction examples
 - Final evaluation metrics
 
-## Authors
-
-- Holly Chen
-- Team Members
 
 ---
 
