@@ -22,8 +22,7 @@ This project aims to:
 ## Repository Structure
 
 ```
-project-root/
-│
+.
 ├── configs/
 │   └── model_config.yaml
 │
@@ -34,22 +33,22 @@ project-root/
 │   └── 04_model_evaluation.ipynb
 │
 ├── outputs/
+│   ├── preprocessing_summary.png
 │   ├── prediction_samples.csv
-│   ├── evaluation_results.csv
-│   └── figures/
+│   └── evaluation_results.png
 │
 ├── src/
+│   ├── data_loader.py
 │   ├── preprocessing.py
 │   ├── training.py
-│   ├── data_loader.py
 │   ├── model_runner.py
 │   └── evaluation.py
 │
 ├── utils/
 │   └── helpers.py
 │
-├── requirements.txt
-└── README.md
+├── README.md
+└── requirements.txt
 ```
 
 ---
