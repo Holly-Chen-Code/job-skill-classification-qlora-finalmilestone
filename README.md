@@ -59,6 +59,8 @@ Group 20
 │
 ├── README.md
 └── requirements.txt
+└── reproducible_pipleline.ipynb
+
 ```
 
 The notebooks document the model development process completed throughout the course, while the modular implementation used for the final pipeline is located in the `src/` directory.
@@ -117,6 +119,13 @@ The complete training configuration is provided in `configs/model_config.yaml`, 
 ---
 
 # Running the Project
+
+## Quick Start
+
+The easiest way to reproduce this project is to run:
+
+reproducible_pipeline.ipynb 
+
 
 The recommended way to reproduce this project is to execute the provided Kaggle notebook sequentially. Each stage calls the reusable modules implemented in the `src/` directory.
 
