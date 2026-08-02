@@ -124,7 +124,7 @@ The complete training configuration is provided in `configs/model_config.yaml`, 
 
 The easiest way to reproduce this project is to execute the provided Kaggle notebook:
 
-`reproducible_pipeline.ipynb`
+[**reproducible_pipeline.ipynb**](./reproducible_pipeline.ipynb)
 
 The notebook performs the complete workflow:
 
