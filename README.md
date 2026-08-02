@@ -118,16 +118,19 @@ The complete training configuration is provided in `configs/model_config.yaml`, 
 
 ---
 
-# Running the Project
+# Reproducing the Project
 
 ## Quick Start
 
-The easiest way to reproduce this project is to run:
+The easiest way to reproduce this project is to execute the provided Kaggle notebook:
 
-reproducible_pipeline.ipynb 
+`reproducible_pipeline.ipynb`
 
+The notebook performs the complete workflow:
 
-The recommended way to reproduce this project is to execute the provided Kaggle notebook sequentially. Each stage calls the reusable modules implemented in the `src/` directory.
+**Setup → Preprocessing → Training Test → Inference → Evaluation**
+
+Each stage calls the reusable modules implemented in the `src/` directory.
 
 ---
 
